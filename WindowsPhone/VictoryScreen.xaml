@@ -1,0 +1,123 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+using BattleArena_PortableClassLibrary;
+using Windows.UI.Popups;
+
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
+
+namespace RandomBattleArena
+{
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class VictoryScreen : Page
+    {
+        public VictoryScreen()
+        {
+            this.InitializeComponent();
+            setDataContexts();
+        }
+
+        private void setDataContexts()
+        {
+            uPlayerWinsTextBlock.DataContext = AppState.CharacterModel;
+            uPlayerScoreTextBlock.DataContext = AppState.CharacterModel;
+        }
+
+        /// <summary>
+        /// Invoked when this page is about to be displayed in a Frame.
+        /// </summary>
+        /// <param name="e">Event data that describes how this page was reached.
+        /// This parameter is typically used to configure the page.</param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            //uEasyRadioButton.IsChecked = true;
+            //uHealthRadioButton.IsChecked = true;
+        }
+
+        Random mRandom = new Random();
+        private int generateRandomValue(Random aRandom, int aDifficulty)
+        {
+            return aRandom.Next(aDifficulty, aDifficulty * 3);
+        }
+
+
+        private void uMainMenuBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private async void uNextPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkIfSurveyComplete())
+            {
+                if (uEasyRadioButton.IsChecked == true)
+                {
+                    AppState.MonsterModel.GenerateMonster((int)monsterDifficultyEnum.Easy);
+                }
+                else if (uMediumRadioButton.IsChecked == true)
+                {
+                    AppState.MonsterModel.GenerateMonster((int)monsterDifficultyEnum.Medium);
+                }
+                else
+                {
+                    AppState.MonsterModel.GenerateMonster((int)monsterDifficultyEnum.Hard);
+                }
+
+                if (uHealthRadioButton.IsChecked == true)
+                {
+                    AppState.CharacterModel.PlayerHealth += generateRandomValue(mRandom, AppState.MonsterModel.DifficultyLevel);
+                }
+                else if (uDamageRadioButton.IsChecked == true)
+                {
+                    AppState.CharacterModel.PlayerDamage += generateRandomValue(mRandom, AppState.MonsterModel.DifficultyLevel);
+                }
+                else
+                {
+                    //Insert random buffs here
+                    AppState.CharacterModel.PlayerHealth += 50;
+                }
+
+                this.Frame.Navigate(typeof(BattlePage));
+            }
+            else
+            {
+                MessageDialog lDialogBox = new MessageDialog("Must select a difficulty and bonus");
+                await lDialogBox.ShowAsync();
+            }
+
+            
+        }
+
+        private bool checkIfSurveyComplete()
+        {
+            bool lReturn = false;
+            if (uEasyRadioButton.IsChecked == false && uMediumRadioButton.IsChecked == false && uHardRadioButton.IsChecked == false)
+            {
+                lReturn = false;
+            }
+            else if (uHealthRadioButton.IsChecked == false && uDamageRadioButton.IsChecked == false && uRandomRadioButton.IsChecked == false)
+            {
+                lReturn = false;
+            }
+            else
+            {
+                lReturn = true;
+            }
+            return lReturn;
+        }
+
+    }
+}
