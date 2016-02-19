@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="RandomBattleArena.CharacterCreationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RandomBattleArena"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Name="AppBarForward" Label="Next" Icon="Forward" Click="AppBarForward_Click" />
+        
+        <CommandBar.SecondaryCommands>
+            <AppBarButton Name="uAppBarQuit" Label="Return to main page" Click="uAppBarQuit_Click"/>
+        </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="90"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Text="Character Creation" FontSize="32" Margin="9,0,0,9" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+
+        <ListView Grid.Row="1" Grid.Column="0" Margin="9,0,0,0">
+        <StackPanel >
+            <RadioButton Name="uRadioButton1" Content="{Binding Path=className}" Click="uRadioButton1_Click"/>
+            <RadioButton Name="uRadioButton2" Content="{Binding Path=className}" Click="uRadioButton2_Click"/>
+            </StackPanel>
+        </ListView>
+
+        <!--
+        <TextBlock Name="uDescriptionTextBlock" FontSize="24" TextWrapping="WrapWholeWords" Grid.Row="1" Grid.Column="1"/>
+        -->
+        
+        <!--STARTING STATS-->
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Health: " FontSize="24" Margin="0,0,9,0"/>
+                <TextBlock Name="uStartingHealthTextBlock" FontSize="24" Text="{Binding startingHealth}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Damage: " FontSize="24" Margin="0,0,9,0"/>
+                <TextBlock Name="uStartingDamageTextBlock" FontSize="24" Text="{Binding startingDamage}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Ability Points: " FontSize="24" Margin="0,0,9,0"/>
+                <TextBlock Name="uStartingAbilityPowerTextBlock" FontSize="24" Text="{Binding startingAbilityPoints}" />
+            </StackPanel>
+        </StackPanel>
+        
+        <!--SKILLS-->
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Skill 1: " FontSize="24" Margin="0,0,9,0"/>
+                <TextBlock Name="uSkillOneTextBlock" Text="{Binding skillOne}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Skill 2: " FontSize="24" Margin="0,0,9,0"/>
+                <TextBlock Name="uSkillTwoTextBlock" Text="{Binding skillTwo}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Skill 3: " FontSize="24" Margin="0,0,9,0"/>
+                <TextBlock Name="uSkillThreeTextBlock" Text="{Binding skillThree}" FontSize="24"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Skill 4: " FontSize="24" Margin="0,0,9,0"/>
+                <TextBlock Name="uSkillFourTextBlock" Text="{Binding skillFour}" FontSize="24"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <!--NAME CHANGE-->
+        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,9">
+            <TextBlock Text="Change name" FontSize="24"/>
+            <TextBox Name="uChangeNameTextBox" Text="{Binding PlayerName, Mode=TwoWay}" MaxLength="15" FontSize="24" KeyDown="uChangeNameTextBox_KeyDown" GotFocus="uChangeNameTextBox_GotFocus" LostFocus="uChangeNameTextBox_LostFocus"/>
+        </StackPanel>
+        
+        
+    </Grid>
+</Page>

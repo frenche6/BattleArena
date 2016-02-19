@@ -1,123 +1,95 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using BattleArena_PortableClassLibrary;
-using Windows.UI.Popups;
+﻿<Page
+    x:Class="RandomBattleArena.VictoryScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RandomBattleArena"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
+    <!--BOTTOM APP BAR-->
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Name="uNextPageButton" Label="Fight again" Icon="Forward" Click="uNextPageButton_Click"/>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Name="uMainMenuBarButton" Label="Main menu" Click="uMainMenuBarButton_Click"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 
-namespace RandomBattleArena
-{
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class VictoryScreen : Page
-    {
-        public VictoryScreen()
-        {
-            this.InitializeComponent();
-            setDataContexts();
-        }
+    <Grid>
 
-        private void setDataContexts()
-        {
-            uPlayerWinsTextBlock.DataContext = AppState.CharacterModel;
-            uPlayerScoreTextBlock.DataContext = AppState.CharacterModel;
-        }
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.
-        /// This parameter is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            //uEasyRadioButton.IsChecked = true;
-            //uHealthRadioButton.IsChecked = true;
-        }
+        <!--TITLE-->
+        <TextBlock Text="You are victorious!" FontSize="50" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
 
-        Random mRandom = new Random();
-        private int generateRandomValue(Random aRandom, int aDifficulty)
-        {
-            return aRandom.Next(aDifficulty, aDifficulty * 3);
-        }
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Number of wins: " FontSize="36" Margin="0,0,9,0"/>
+                <TextBlock Name="uPlayerWinsTextBlock" Text="{Binding PlayerWins, Mode=TwoWay}" FontSize="36"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Current Score:" FontSize="36" Margin="0,0,9,0"/>
+                <TextBlock Name="uPlayerScoreTextBlock" Text="{Binding PlayerScore, Mode=TwoWay}" FontSize="36"/>
+            </StackPanel>
+        </StackPanel>
 
+        <!--MONSTER LEVEL SELECT-->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Next monster level" FontSize="22"/>
+                <RadioButton Name="uEasyRadioButton" Content="Easy" IsChecked="True" />
+                <RadioButton Name="uMediumRadioButton" Content="Medium"/>
+                <RadioButton Name="uHardRadioButton" Content="Hard"/>
+            </StackPanel>
+        </StackPanel>
 
-        private void uMainMenuBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(MainPage));
-        }
+        <!--SELECTED STAT-->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Select a bonus" FontSize="22"/>
+                <RadioButton Name="uHealthRadioButton" Content="Health"/>
+                <RadioButton Name="uDamageRadioButton" Content="Damage"/>
+                <RadioButton Name="uRandomRadioButton" Content="Random"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <!--ATTRIBUTE BUTTONS-->
+        <!--
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button Name="uGainHealthButton" Width="120" Height="100" Margin="9,0,0,0" Click="uGainHealthButton_Click">
+                <Button.Content>
+                    <TextBlock Text="Gain Health" TextWrapping="Wrap" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button.Content>
+            </Button>
+            <Button Name="uGainDamageButton" Width="120" Height="100" Margin="9,0,0,0" Click="uGainDamageButton_Click">
+                <Button.Content>
+                    <TextBlock Text="Gain Damage" TextWrapping="Wrap" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button.Content>
+            </Button>
+            <Button Name="uGainAPButton" Width="120" Height="100" Margin="9,0,0,0">
+                <Button.Content>
+                    <TextBlock Text="Gain AP" TextWrapping="Wrap" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        -->
 
-        private async void uNextPageButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (checkIfSurveyComplete())
-            {
-                if (uEasyRadioButton.IsChecked == true)
-                {
-                    AppState.MonsterModel.GenerateMonster((int)monsterDifficultyEnum.Easy);
-                }
-                else if (uMediumRadioButton.IsChecked == true)
-                {
-                    AppState.MonsterModel.GenerateMonster((int)monsterDifficultyEnum.Medium);
-                }
-                else
-                {
-                    AppState.MonsterModel.GenerateMonster((int)monsterDifficultyEnum.Hard);
-                }
+        <!--MENU BUTTONS-->
+        <!--<Button Name="uMainMenuButton" Content="Main Menu" Height="100" Width="150" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="0" Click="uMainMenuButton_Click" />
+        <Button Name="uNewCharacterButton" Content="New Character" Height="100" Width="150" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1" />-->
 
-                if (uHealthRadioButton.IsChecked == true)
-                {
-                    AppState.CharacterModel.PlayerHealth += generateRandomValue(mRandom, AppState.MonsterModel.DifficultyLevel);
-                }
-                else if (uDamageRadioButton.IsChecked == true)
-                {
-                    AppState.CharacterModel.PlayerDamage += generateRandomValue(mRandom, AppState.MonsterModel.DifficultyLevel);
-                }
-                else
-                {
-                    //Insert random buffs here
-                    AppState.CharacterModel.PlayerHealth += 50;
-                }
-
-                this.Frame.Navigate(typeof(BattlePage));
-            }
-            else
-            {
-                MessageDialog lDialogBox = new MessageDialog("Must select a difficulty and bonus");
-                await lDialogBox.ShowAsync();
-            }
-
-            
-        }
-
-        private bool checkIfSurveyComplete()
-        {
-            bool lReturn = false;
-            if (uEasyRadioButton.IsChecked == false && uMediumRadioButton.IsChecked == false && uHardRadioButton.IsChecked == false)
-            {
-                lReturn = false;
-            }
-            else if (uHealthRadioButton.IsChecked == false && uDamageRadioButton.IsChecked == false && uRandomRadioButton.IsChecked == false)
-            {
-                lReturn = false;
-            }
-            else
-            {
-                lReturn = true;
-            }
-            return lReturn;
-        }
-
-    }
-}
+    </Grid>
+</Page>

@@ -1,0 +1,57 @@
+﻿<Page
+    x:Class="RandomBattleArena.ScoreListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RandomBattleArena"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <!--BOTTOM APP BAR-->
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="AppBarBack" Label="Back" Icon="Back" Click="AppBarBack_Click" />
+
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <!--TITLE-->
+        <TextBlock Text="Score List" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+
+        <!--COMBAT LOG-->
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <ListView Name="uScoreListView" ItemsSource="{Binding PlayerScoreList}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ListViewItem>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="uNameText" Text="{Binding PlayerName}" FontSize="22" />
+                                <TextBlock Name="uScoreText" Text="{Binding FinalScore}" FontSize="22" />
+                            </StackPanel>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+        <!--<ListView Name="uCombatLogListView"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <TextBlock Text="{Binding Description}"/>
+            <TextBlock Text="{Binding Damage}" />
+        </ListView>-->
+
+    </Grid>
+    
+</Page>
